@@ -58,6 +58,7 @@ def processLine(parsedLine):
         if currentId not in guards:
             guards[currentId] = {'23': [0] * 60, '0': [0] * 60}
 
+# Strategy 1
 def findMostAsleepGuard():
     global guards
     maxIndex = ""
@@ -82,16 +83,30 @@ def findMostAsleepMinute(guardId):
     maxHour = 0
     maxMinute = 0
     maxVal = 0
-    print(guard)
     for hour, hourArray in guard.items():
         for i, val in enumerate(hourArray):
-            print(hourArray[i])
             if val > maxVal:
                 maxVal = val
                 maxMinute = i
                 maxHour = hour
-    print(maxHour, maxMinute)
     return maxHour, maxMinute
+
+# Strategy 2
+def findAbsoluteMostAsleepMinute():
+    global guards
+    maxIndex = ""
+    maxMin = 0
+    maxVal = 0
+    for i, guard in guards.items():
+        for hourValue, hourArray in guard.items():
+            for minute, val in enumerate(hourArray):
+                if val > maxVal:
+                    maxVal = val
+                    maxIndex = i
+                    maxMin = minute
+    print(guards[maxIndex])
+    print(maxIndex, maxMin, maxVal)
+    return maxIndex, maxMin
 
 
 def main():
@@ -106,10 +121,14 @@ def main():
 
     maxAsleep = findMostAsleepGuard()
     maxHour, maxMinute = findMostAsleepMinute(maxAsleep)
-    print(guards[maxAsleep])
-    print(maxMinute)
 
-    print("answer is %d" % (int(maxAsleep) * maxMinute))
+    print("Strategy 1 answer is %d" % (int(maxAsleep) * maxMinute))
+
+    guard, minute = findAbsoluteMostAsleepMinute()
+
+    print("Strategy 2 answer is %d" % (int(guard) * minute))
+
+
 
 if __name__ == '__main__':
     main()
