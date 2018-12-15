@@ -2,5 +2,15 @@
 
 file = open("input/XXX.txt", "r")
 
-for line in file:
-    print(line)
+
+def parseInput():
+    for line in file:
+        print(line)
+
+
+def main():
+    parseInput()
+
+
+if __name__ == '__main__':
+    main()
