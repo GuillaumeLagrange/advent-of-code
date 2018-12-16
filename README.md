@@ -1,3 +1,3 @@
-#Advent of code
+# Advent of code
 
-I'm very inexperienced in problems like these, do not expect elegent solutions
+Don't expect anything fancy here
