@@ -166,19 +166,70 @@ def main():
     global instructions
     global sequence
     instructionsNb = []
+    sequenceNb = []
     parseInput()
+    instructionsOpCodes = [None for i in range(len(instructions))]
     for i, element in enumerate(sequence):
-        nb = 0
-        for f in instructions:
+        nb = [False for i in range(len(instructions))]
+        n = 0
+        for j, f in enumerate(instructions):
             if f(element[0], element[1][1::]) == element[2]:
-                nb += 1
-        instructionsNb.append(nb)
-    a = 0
-    for n in instructionsNb:
-        if n >=3:
-            a += 1
-    print(a)
+                n += 1
+                nb[j] = True
+        instructionsNb.append(n)
+        sequenceNb.append(nb)
+    print(instructionsNb)
 
+    for i, instr in enumerate(instructionsNb):
+        if instr == 1:
+            print("MATCH FOUND")
+            instructionIdx = sequenceNb[i].index(True)
+            instructionsOpCodes[sequence[i][1][0]] = instructions[instructionIdx]
+            for j in range(len(sequence)):
+                if sequenceNb[j][instructionIdx] is True:
+                    if sequence[i][1][0] == sequence[j][1][0]:
+                        instructionsNb[j] = 0
+                        sequenceNb[j] = [False for i in range(len(instructions))]
+                    else:
+                        instructionsNb[j] -= 1
+                    sequenceNb[j][instructionIdx] = False
+
+    print(instructionsOpCodes)
+    print(instructionsNb)
+    for i, instr in enumerate(instructionsNb):
+        if instr == 2:
+            print("MATCH FOUND")
+            instructionIdx = sequenceNb[i].index(True)
+            instructionIdx = sequenceNb[i][instructionIdx + 1::].index(True)
+            instructionsOpCodes[sequence[i][1][0]] = instructions[instructionIdx]
+            for j in range(len(sequence)):
+                if sequenceNb[j][instructionIdx] is True:
+                    if sequence[i][1][0] == sequence[j][1][0]:
+                        instructionsNb[j] = 0
+                        sequenceNb[j] = [False for i in range(len(instructions))]
+                    else:
+                        instructionsNb[j] -= 1
+                    sequenceNb[j][instructionIdx] = False
+
+    print(instructionsOpCodes)
+    print(instructionsNb)
+    for i, instr in enumerate(instructionsNb):
+        if instr == 2:
+            print("MATCH FOUND")
+            instructionIdx = sequenceNb[i].index(True)
+            #  instructionIdx = sequenceNb[i][instructionIdx + 1::].index(True)
+            instructionsOpCodes[sequence[i][1][0]] = instructions[instructionIdx]
+            for j in range(len(sequence)):
+                if sequenceNb[j][instructionIdx] is True:
+                    if sequence[i][1][0] == sequence[j][1][0]:
+                        instructionsNb[j] = 0
+                        sequenceNb[j] = [False for i in range(len(instructions))]
+                    else:
+                        instructionsNb[j] -= 1
+                    sequenceNb[j][instructionIdx] = False
+
+    print(instructionsOpCodes)
+    print(instructionsNb)
 
 
 
