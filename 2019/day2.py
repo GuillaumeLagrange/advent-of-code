@@ -1,16 +1,26 @@
-#!/bin/python3
+#!/bin/python3.6
+
+import copy
 
 file = open("input/day2.txt", "r")
 
+input_mem = []
 mem = []
 index = 0
 
 def parseInput():
-    global mem
+    global input_mem
     for line in file:
-        mem = [int(i) for i in line.strip().split(',')]
-    mem[1] = 12
-    mem[2] = 2
+        input_mem = [int(i) for i in line.strip().split(',')]
+
+def initMem(n, v):
+    global mem
+    global input_mem
+    global index
+    mem = list(input_mem)
+    index = 0
+    mem[1] = n
+    mem[2] = v
 
 def executeStep():
     global mem
@@ -30,16 +40,21 @@ def executeStep():
 
 
 def main():
+    global input_mem
     global mem
     parseInput()
 
-    print mem
+    print input_mem
 
-    while executeStep():
-        pass
-
-    print mem
-
+    for i in range(100):
+        for j in range(100):
+            initMem(i, j)
+            while executeStep():
+                pass
+            if mem[0] == 19690720:
+                print (i, j, 100 * i + j)
+                print mem
+                return 1
 
 if __name__ == '__main__':
     main()
